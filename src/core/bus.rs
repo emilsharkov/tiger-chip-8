@@ -1,9 +1,8 @@
-use crate::core::{display::Display, memory::Memory, input::Input, timers::Timers, speaker::Speaker};
+use crate::core::{vram::Vram, ram::Ram, keypad::Keypad, timers::Timers};
 
 pub struct Bus<'a> {
-    pub memory: &'a mut Memory,
-    pub display: &'a mut Display,
-    pub input: &'a Input,
+    pub ram: &'a mut Ram,
+    pub vram: &'a mut Vram,
+    pub keypad: &'a Keypad,
     pub timers: &'a mut Timers,
-    pub speaker: &'a mut Speaker,
 }

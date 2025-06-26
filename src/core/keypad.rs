@@ -1,8 +1,8 @@
-pub struct Input {
+pub struct Keypad {
     pub keys: [bool; 16],
 }
 
-impl Input {
+impl Keypad {
     pub fn new() -> Self {
         Self { keys: [false; 16] }
     }

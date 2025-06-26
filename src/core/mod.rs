@@ -1,7 +1,9 @@
 pub mod cpu;
-pub mod display;
-pub mod memory;
+pub mod vram;
+pub mod ram;
 pub mod bus;
-pub mod input;
-pub mod speaker;
+pub mod keypad;
+pub mod apu;
+pub mod display;
 pub mod timers;
+pub mod emulator;
