@@ -1,0 +1,16 @@
+[package]
+name = "tiger-chip8-desktop"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT OR Apache-2.0"
+description = "Desktop frontend for CHIP-8 emulator using SDL2"
+
+[[bin]]
+name = "tiger-chip8"
+path = "src/main.rs"
+
+[dependencies]
+tiger-chip8-core = { path = "../core" }
+sdl2 = "0.37"
+clap = { version = "4.4", features = ["derive"] } 

@@ -1,4 +1,4 @@
-use crate::core::display::Display;
+use tiger_chip8_core::display::Display;
 use sdl2::{render::Canvas, video::Window};
 
 pub struct DesktopDisplay {

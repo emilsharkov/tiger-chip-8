@@ -1,14 +1,14 @@
 use std::fs::File;
 use sdl2::keyboard::Keycode;
 use std::io::Read;
-use crate::core::bus::Bus;
-use crate::desktop::display::DesktopDisplay;
-use crate::core::emulator::Emulator;
-use crate::core::cpu::Cpu;
-use crate::core::ram::Ram;
-use crate::core::vram::Vram;
-use crate::core::keypad::Keypad;
-use crate::core::timers::Timers;
+use tiger_chip8_core::bus::Bus;
+use tiger_chip8_core::emulator::Emulator;
+use tiger_chip8_core::cpu::Cpu;
+use tiger_chip8_core::ram::Ram;
+use tiger_chip8_core::vram::Vram;
+use tiger_chip8_core::keypad::Keypad;
+use tiger_chip8_core::timers::Timers;
+use crate::display::DesktopDisplay;
 
 pub struct DesktopEmulator {
     cpu: Cpu,
@@ -50,11 +50,8 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
         self.timers.tick();
     }
 
-    fn load_rom(&mut self, file_path: &str) -> Vec<u8> {
-        let mut file = File::open(file_path).unwrap();
-        let mut buffer = Vec::new();
-        file.read_to_end(&mut buffer).unwrap();
-        buffer
+    fn load_rom(&mut self, rom_bytes: Vec<u8>) {
+        self.ram.load_rom(rom_bytes);
     }
     
     fn to_keycode(&mut self, control: Keycode) -> Option<u8> {

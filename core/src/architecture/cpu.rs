@@ -1,4 +1,4 @@
-use crate::core::{bus::Bus, ram::PROGRAM_START, vram::{DISPLAY_HEIGHT, DISPLAY_WIDTH}};
+use crate::architecture::{bus::Bus, ram::PROGRAM_START, vram::{DISPLAY_HEIGHT, DISPLAY_WIDTH}};
 
 pub struct Cpu {
     pub v_regs: [u8; 16],
