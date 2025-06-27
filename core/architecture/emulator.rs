@@ -16,7 +16,6 @@ pub trait Emulator<Display, Control> {
 
     fn tick_frame(&mut self);
     fn tick_cycle(&mut self);
-    fn run(&mut self);
     fn load_rom(&mut self, file_path: &str) -> Vec<u8>;
     fn to_keycode(&mut self, control: Control) -> Option<u8>;
 }

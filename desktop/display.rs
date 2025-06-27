@@ -5,12 +5,12 @@ pub struct DesktopDisplay {
     canvas: Canvas<Window>,
 }
 
-impl Display for DesktopDisplay {
-    type Canvas = Canvas<Window>;
-    fn new(canvas: Self::Canvas) -> Self {
+impl Display<Canvas<Window>> for DesktopDisplay {
+    fn new(canvas: Canvas<Window>) -> Self {
         Self { canvas }
     }
 
     fn draw_screen(&mut self, pixels: &[bool]) {
+        todo!()
     }
 }

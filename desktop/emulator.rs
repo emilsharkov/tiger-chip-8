@@ -46,11 +46,8 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
     }
 
     fn tick_cycle(&mut self) {
-
-    }
-
-    fn run(&mut self) {
-        unimplemented!()
+        // TODO: add sound
+        self.timers.tick();
     }
 
     fn load_rom(&mut self, file_path: &str) -> Vec<u8> {
