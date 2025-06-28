@@ -1,5 +1,7 @@
 # tiger-chip8
 
+![PONG](chip8.png)
+
 ## Desktop
 ```
 A CHIP-8 emulator written in Rust
