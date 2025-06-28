@@ -1,2 +1,2 @@
 pub mod architecture;
-pub use architecture::*; 
+pub use architecture::*;

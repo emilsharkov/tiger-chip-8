@@ -9,12 +9,12 @@ use clap::{command, Parser};
 pub struct Args {
     #[arg(value_name = "ROM_FILE", value_parser = validate_rom_file_parser)]
     pub rom_file: PathBuf,
-    
+
     #[arg(short, long, default_value = "15", value_parser = validate_scale_parser)]
     pub scale: u8,
-    
-    #[arg(short, long, default_value = "10", value_parser = validate_ticks_per_frame_parser)]
-    pub ticks_per_frame: usize,
+
+    #[arg(short, long, default_value = "10", value_parser = validate_ops_per_frame_parser)]
+    pub ops_per_frame: usize,
 }
 
 fn validate_rom_file_parser(s: &str) -> Result<PathBuf, String> {
@@ -32,17 +32,21 @@ fn validate_rom_file_parser(s: &str) -> Result<PathBuf, String> {
 }
 
 fn validate_scale_parser(s: &str) -> Result<u8, String> {
-    let scale = s.parse::<u8>().map_err(|e| format!("Invalid scale format: {}", e))?;
+    let scale = s
+        .parse::<u8>()
+        .map_err(|e| format!("Invalid scale format: {}", e))?;
     if !(scale >= 1 && scale <= 20) {
         return Err("Scale must be between 1 and 20".to_string());
     }
     Ok(scale)
 }
 
-fn validate_ticks_per_frame_parser(s: &str) -> Result<usize, String> {
-    let ticks_per_frame = s.parse::<usize>().map_err(|e| format!("Invalid ticks per frame format: {}", e))?;
-    if !(ticks_per_frame >= 1 && ticks_per_frame <= 100) {
-        return Err("Ticks per frame must be between 1 and 100".to_string());
+fn validate_ops_per_frame_parser(s: &str) -> Result<usize, String> {
+    let ops_per_frame = s
+        .parse::<usize>()
+        .map_err(|e| format!("Invalid ops per frame format: {}", e))?;
+    if !(ops_per_frame >= 1 && ops_per_frame <= 100) {
+        return Err("Ops per frame must be between 1 and 100".to_string());
     }
-    Ok(ticks_per_frame)
+    Ok(ops_per_frame)
 }

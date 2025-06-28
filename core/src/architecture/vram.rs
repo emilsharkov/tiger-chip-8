@@ -7,7 +7,9 @@ pub struct Vram {
 
 impl Vram {
     pub fn new() -> Self {
-        Self { pixels: [false; DISPLAY_WIDTH * DISPLAY_HEIGHT] }
+        Self {
+            pixels: [false; DISPLAY_WIDTH * DISPLAY_HEIGHT],
+        }
     }
 
     pub fn clear(&mut self) {

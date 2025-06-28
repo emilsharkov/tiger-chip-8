@@ -1,5 +1,7 @@
-use sdl2::audio::{AudioCallback, AudioDevice};
+use sdl2::audio::AudioDevice;
 use tiger_chip8_core::apu::Apu;
+
+use crate::gui::SquareWave;
 
 pub struct DesktopApu {
     audio_device: AudioDevice<SquareWave>,
@@ -16,26 +18,5 @@ impl Apu<AudioDevice<SquareWave>> for DesktopApu {
 
     fn stop(&self) {
         self.audio_device.pause()
-    }
-}
-
-pub struct SquareWave {
-    pub phase_inc: f32,
-    pub phase: f32,
-    pub volume: f32,
-}
-
-impl AudioCallback for SquareWave {
-    type Channel = f32;
-
-    fn callback(&mut self, out: &mut [f32]) {
-        for x in out.iter_mut() {
-            *x = if self.phase <= 0.5 {
-                self.volume
-            } else {
-                -self.volume
-            };
-            self.phase = (self.phase + self.phase_inc) % 1.0;
-        }
     }
 }

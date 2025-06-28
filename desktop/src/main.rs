@@ -1,39 +1,46 @@
-mod emulator;
-mod display;
-mod args;
 mod apu;
+mod args;
+mod display;
+mod emulator;
 mod gui;
 
-use crate::apu::{DesktopApu};
-use crate::args::Args;
-use crate::gui::init_gui;
+use crate::{apu::DesktopApu, args::Args, gui::init_gui};
 use clap::Parser;
+use display::DesktopDisplay;
 use emulator::DesktopEmulator;
 use sdl2::event::Event;
-use tiger_chip8_core::apu::Apu;
-use tiger_chip8_core::emulator::Emulator;
-use tiger_chip8_core::display::Display;
-use tiger_chip8_core::{cpu::Cpu, ram::Ram, keypad::Keypad, timers::Timers, vram::Vram, vram::DISPLAY_WIDTH, vram::DISPLAY_HEIGHT};
-use display::DesktopDisplay;
-use std::fs::File;
-use std::io::Read;
-use std::path::PathBuf;
+use std::{fs::File, io::Read, path::PathBuf};
+use tiger_chip8_core::{
+    apu::Apu,
+    cpu::Cpu,
+    display::Display,
+    emulator::Emulator,
+    keypad::Keypad,
+    ram::Ram,
+    timers::Timers,
+    vram::{Vram, DISPLAY_HEIGHT, DISPLAY_WIDTH},
+};
 
 fn main() {
-    let Args { rom_file, scale, ticks_per_frame } = args::Args::try_parse().unwrap_or_else(|e| {
+    let Args {
+        rom_file,
+        scale,
+        ops_per_frame,
+    } = args::Args::try_parse().unwrap_or_else(|e| {
         eprintln!("Error: {}", e);
         std::process::exit(1);
     });
 
     let rom_bytes = get_rom_bytes(rom_file);
-    let (mut event_pump, canvas, audio_device) = init_gui(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, scale.into());
+    let (mut event_pump, canvas, audio_device) =
+        init_gui(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, scale.into());
 
     let mut emulator = DesktopEmulator::new(
-        Cpu::new(), 
-        Ram::new(), 
-        Vram::new(), 
-        Keypad::new(), 
-        Timers::new(), 
+        Cpu::new(),
+        Ram::new(),
+        Vram::new(),
+        Keypad::new(),
+        Timers::new(),
         DesktopDisplay::new(canvas),
         DesktopApu::new(audio_device),
     );
@@ -46,12 +53,16 @@ fn main() {
                 Event::Quit { .. } => {
                     break 'game_loop;
                 }
-                Event::KeyDown { keycode: Some(key), .. } => {
+                Event::KeyDown {
+                    keycode: Some(key), ..
+                } => {
                     if let Some(k) = emulator.to_keycode(key) {
                         emulator.handle_key_press(k.into(), true);
                     }
                 }
-                Event::KeyUp { keycode: Some(key), .. } => {
+                Event::KeyUp {
+                    keycode: Some(key), ..
+                } => {
                     if let Some(k) = emulator.to_keycode(key) {
                         emulator.handle_key_press(k.into(), false);
                     }
@@ -59,7 +70,7 @@ fn main() {
                 _ => {}
             }
         }
-        for _ in 0..ticks_per_frame {
+        for _ in 0..ops_per_frame {
             emulator.emulate_instruction();
         }
         emulator.tick_timers();
@@ -73,4 +84,3 @@ fn get_rom_bytes(rom_file: PathBuf) -> Vec<u8> {
     file.read_to_end(&mut buffer).unwrap();
     buffer
 }
-

@@ -18,7 +18,7 @@ const FONTSET: [u8; FONTSET_SIZE] = [
     0xF0, 0x80, 0x80, 0x80, 0xF0, // C
     0xE0, 0x90, 0x90, 0x90, 0xE0, // D
     0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
-    0xF0, 0x80, 0xF0, 0x80, 0x80  // F
+    0xF0, 0x80, 0xF0, 0x80, 0x80, // F
 ];
 
 pub struct Ram {
@@ -27,7 +27,9 @@ pub struct Ram {
 
 impl Ram {
     pub fn new() -> Self {
-        Self { map: [0; MEMORY_SIZE] }
+        Self {
+            map: [0; MEMORY_SIZE],
+        }
     }
 
     pub fn read(&self, address: usize) -> u8 {
@@ -50,4 +52,3 @@ impl Ram {
         }
     }
 }
-

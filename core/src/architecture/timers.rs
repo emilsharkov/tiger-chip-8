@@ -3,10 +3,12 @@ pub struct Timers {
     pub sound_timer: u8,
 }
 
-
 impl Timers {
     pub fn new() -> Self {
-        Self { delay_timer: 0, sound_timer: 0 }
+        Self {
+            delay_timer: 0,
+            sound_timer: 0,
+        }
     }
 
     pub fn tick(&mut self) {

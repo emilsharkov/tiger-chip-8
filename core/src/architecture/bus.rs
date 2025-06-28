@@ -1,4 +1,4 @@
-use crate::architecture::{vram::Vram, ram::Ram, keypad::Keypad, timers::Timers};
+use crate::architecture::{keypad::Keypad, ram::Ram, timers::Timers, vram::Vram};
 
 pub struct Bus<'a> {
     pub ram: &'a mut Ram,
