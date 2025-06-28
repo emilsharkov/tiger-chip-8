@@ -16,18 +16,18 @@ Options:
   -V, --version                        Print version
 ```
 
-## Running the Emulator
-
-### Prerequisites
+## Prerequisites
 You need to have SDL2 installed on your machine.
 
 Instruction can be found in the [sdl2 github readme](https://github.com/Rust-SDL2/rust-sdl2).
 
-#### MacOS
+### MacOS
 ```
 brew install sdl2
 export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
 ```
+
+## Running the Emulator
 
 ### Without Compiling an Executable
 ```
