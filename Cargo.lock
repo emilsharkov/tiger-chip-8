@@ -261,19 +261,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "tiger-chip8-core"
+name = "tiger-chip-8-core"
 version = "0.1.0"
 dependencies = [
  "rand",
 ]
 
 [[package]]
-name = "tiger-chip8-desktop"
+name = "tiger-chip-8-desktop"
 version = "0.1.0"
 dependencies = [
  "clap",
  "sdl2",
- "tiger-chip8-core",
+ "tiger-chip-8-core",
 ]
 
 [[package]]

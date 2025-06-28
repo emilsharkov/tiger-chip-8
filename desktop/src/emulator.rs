@@ -1,15 +1,15 @@
 use crate::apu::DesktopApu;
 use crate::display::DesktopDisplay;
 use sdl2::keyboard::Keycode;
-use tiger_chip8_core::apu::Apu;
-use tiger_chip8_core::architecture::display::Display;
-use tiger_chip8_core::bus::Bus;
-use tiger_chip8_core::cpu::Cpu;
-use tiger_chip8_core::emulator::Emulator;
-use tiger_chip8_core::keypad::Keypad;
-use tiger_chip8_core::ram::Ram;
-use tiger_chip8_core::timers::Timers;
-use tiger_chip8_core::vram::Vram;
+use tiger_chip_8_core::apu::Apu;
+use tiger_chip_8_core::architecture::display::Display;
+use tiger_chip_8_core::bus::Bus;
+use tiger_chip_8_core::cpu::Cpu;
+use tiger_chip_8_core::emulator::Emulator;
+use tiger_chip_8_core::keypad::Keypad;
+use tiger_chip_8_core::ram::Ram;
+use tiger_chip_8_core::timers::Timers;
+use tiger_chip_8_core::vram::Vram;
 
 pub struct DesktopEmulator {
     cpu: Cpu,

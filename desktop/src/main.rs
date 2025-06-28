@@ -10,7 +10,7 @@ use display::DesktopDisplay;
 use emulator::DesktopEmulator;
 use sdl2::event::Event;
 use std::{fs::File, io::Read, path::PathBuf};
-use tiger_chip8_core::{
+use tiger_chip_8_core::{
     apu::Apu,
     cpu::Cpu,
     display::Display,

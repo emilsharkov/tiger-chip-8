@@ -1,5 +1,5 @@
 use sdl2::audio::AudioDevice;
-use tiger_chip8_core::apu::Apu;
+use tiger_chip_8_core::apu::Apu;
 
 use crate::gui::SquareWave;
 

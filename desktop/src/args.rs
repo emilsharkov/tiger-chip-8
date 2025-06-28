@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use clap::{command, Parser};
 
 #[derive(Parser, Debug)]
-#[command(name = "tiger-chip8")]
+#[command(name = "tiger-chip-8")]
 #[command(about = "A CHIP-8 emulator written in Rust")]
 #[command(version)]
 pub struct Args {

@@ -1,5 +1,5 @@
 use sdl2::{pixels::Color, rect::Rect, render::Canvas, video::Window};
-use tiger_chip8_core::display::Display;
+use tiger_chip_8_core::display::Display;
 
 pub struct DesktopDisplay {
     canvas: Canvas<Window>,

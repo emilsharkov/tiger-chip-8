@@ -1,12 +1,12 @@
-# tiger-chip8
-
-![PONG](chip8.png)
+# tiger-chip-8
+A Chip-8 emulator for playing retro games like PONG written with Rust
+![PONG](chip-8.png)
 
 ## Desktop
 ```
 A CHIP-8 emulator written in Rust
 
-Usage: tiger-chip8 [OPTIONS] <ROM_FILE>
+Usage: tiger-chip-8 [OPTIONS] <ROM_FILE>
 
 Arguments:
   <ROM_FILE>  
@@ -39,6 +39,6 @@ cargo run --release -- desktop/roms/PONG -s 10 -o 8
 ### With Compiling an Executable
 ```
 cargo build --release
-cp target/release/tiger-chip8 .
-./tiger-chip8 desktop/roms/PONG
+cp target/release/tiger-chip-8 .
+./tiger-chip-8 desktop/roms/PONG
 ```

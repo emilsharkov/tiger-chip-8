@@ -1,7 +1,7 @@
 [package]
-name = "tiger-chip8-core"
+name = "tiger-chip-8-core"
 version = "0.1.0"
-edition = "2025"
+edition = "2024"
 authors = ["Emil Sharkov <emosharkov@gmail.com>"]
 license = "MIT"
 description = "Core CHIP-8 emulator engine"
