@@ -1,8 +1,10 @@
 mod emulator;
 mod display;
 mod args;
+use crate::args::Args;
 use clap::Parser;
 use emulator::DesktopEmulator;
+use sdl2::event::Event;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::EventPump;
@@ -15,14 +17,13 @@ use std::io::Read;
 use std::path::PathBuf;
 
 fn main() {
-    let args = args::Args::try_parse().unwrap_or_else(|e| {
+    let Args { rom_file, scale, ticks_per_frame } = args::Args::try_parse().unwrap_or_else(|e| {
         eprintln!("Error: {}", e);
         std::process::exit(1);
     });
-    println!("Args: {:?}", args);
-    
-    let rom_bytes = get_rom_bytes(args.rom_file);
-    let (mut event_pump, canvas) = init_sdl(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, args.scale.into());
+    println!("{}",ticks_per_frame);
+    let rom_bytes = get_rom_bytes(rom_file);
+    let (mut event_pump, canvas) = init_sdl(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, scale.into());
 
     let mut emulator = DesktopEmulator::new(
         Cpu::new(), 
@@ -34,31 +35,31 @@ fn main() {
     );
     emulator.load_rom(rom_bytes);
 
-    // 'game_loop: loop {
-    //     for event in event_pump.poll_iter() {
-    //         match event {
-    //             Event::Quit { .. } => {
-    //                 break 'game_loop;
-    //             }
-    //             Event::KeyDown { keycode: Some(key), .. } => {
-    //                 if let Some(k) = emulator.to_keycode(key) {
-    //                     emulator.handle_key_press(k.into(), true);
-    //                 }
-    //             }
-    //             Event::KeyUp { keycode: Some(key), .. } => {
-    //                 if let Some(k) = emulator.to_keycode(key) {
-    //                     emulator.handle_key_press(k.into(), false);
-    //                 }
-    //             }
-    //             _ => {}
-    //         }
-    //     }
-    //     for _ in 0..ticks_per_frame {
-    //         emulator.tick_frame();
-    //     }
-    //     emulator.tick_cycle();
-    //     emulator.draw_screen(DISPLAY_WIDTH, scale);
-    // }
+    'game_loop: loop {
+        for event in event_pump.poll_iter() {
+            match event {
+                Event::Quit { .. } => {
+                    break 'game_loop;
+                }
+                Event::KeyDown { keycode: Some(key), .. } => {
+                    if let Some(k) = emulator.to_keycode(key) {
+                        emulator.handle_key_press(k.into(), true);
+                    }
+                }
+                Event::KeyUp { keycode: Some(key), .. } => {
+                    if let Some(k) = emulator.to_keycode(key) {
+                        emulator.handle_key_press(k.into(), false);
+                    }
+                }
+                _ => {}
+            }
+        }
+        for _ in 0..ticks_per_frame {
+            emulator.emulate_instruction();
+        }
+        emulator.tick_timers();
+        emulator.draw_screen(DISPLAY_WIDTH, scale);
+    }
 }
 
 fn get_rom_bytes(rom_file: PathBuf) -> Vec<u8> {

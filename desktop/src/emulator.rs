@@ -30,7 +30,7 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
         Self { cpu, ram, vram, keypad, timers, display }
     }
 
-    fn tick_frame(&mut self) {
+    fn emulate_instruction(&mut self) {
         let pc = self.cpu.program_counter as usize;
         let higher_byte = self.ram.read(pc) as u16;
         let lower_byte = self.ram.read(pc + 1) as u16;
@@ -44,7 +44,7 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
         });
     }
 
-    fn tick_cycle(&mut self) {
+    fn tick_timers(&mut self) {
         // TODO: add sound
         self.timers.tick();
     }
