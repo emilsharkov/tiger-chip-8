@@ -1,6 +1,4 @@
-use std::fs::File;
 use sdl2::keyboard::Keycode;
-use std::io::Read;
 use tiger_chip8_core::bus::Bus;
 use tiger_chip8_core::emulator::Emulator;
 use tiger_chip8_core::cpu::Cpu;
@@ -8,6 +6,7 @@ use tiger_chip8_core::ram::Ram;
 use tiger_chip8_core::vram::Vram;
 use tiger_chip8_core::keypad::Keypad;
 use tiger_chip8_core::timers::Timers;
+use tiger_chip8_core::architecture::display::Display;
 use crate::display::DesktopDisplay;
 
 pub struct DesktopEmulator {
@@ -74,5 +73,13 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
             Keycode::V    => Some(0xF),
             _             => None,
         }
+    }
+
+    fn handle_key_press(&mut self, key: usize, pressed: bool) {
+        self.keypad.set_key(key as usize, pressed);
+    }
+
+    fn draw_screen(&mut self, width: usize, scale: u8) {
+        self.display.draw_screen(&self.vram.pixels, width, scale);
     }
 }
