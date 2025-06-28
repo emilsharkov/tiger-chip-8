@@ -1,13 +1,16 @@
 mod emulator;
 mod display;
 mod args;
+mod apu;
+mod gui;
+
+use crate::apu::{DesktopApu};
 use crate::args::Args;
+use crate::gui::init_gui;
 use clap::Parser;
 use emulator::DesktopEmulator;
 use sdl2::event::Event;
-use sdl2::render::Canvas;
-use sdl2::video::Window;
-use sdl2::EventPump;
+use tiger_chip8_core::apu::Apu;
 use tiger_chip8_core::emulator::Emulator;
 use tiger_chip8_core::display::Display;
 use tiger_chip8_core::{cpu::Cpu, ram::Ram, keypad::Keypad, timers::Timers, vram::Vram, vram::DISPLAY_WIDTH, vram::DISPLAY_HEIGHT};
@@ -21,9 +24,9 @@ fn main() {
         eprintln!("Error: {}", e);
         std::process::exit(1);
     });
-    println!("{}",ticks_per_frame);
+
     let rom_bytes = get_rom_bytes(rom_file);
-    let (mut event_pump, canvas) = init_sdl(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, scale.into());
+    let (mut event_pump, canvas, audio_device) = init_gui(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, scale.into());
 
     let mut emulator = DesktopEmulator::new(
         Cpu::new(), 
@@ -32,8 +35,10 @@ fn main() {
         Keypad::new(), 
         Timers::new(), 
         DesktopDisplay::new(canvas),
+        DesktopApu::new(audio_device),
     );
     emulator.load_rom(rom_bytes);
+    emulator.load_font_set();
 
     'game_loop: loop {
         for event in event_pump.poll_iter() {
@@ -69,14 +74,3 @@ fn get_rom_bytes(rom_file: PathBuf) -> Vec<u8> {
     buffer
 }
 
-fn init_sdl(width: u32, height: u32, scale: u32) -> (EventPump, Canvas<Window>) {
-    let sdl_context = sdl2::init().unwrap();
-    let video_subsystem = sdl_context.video().unwrap();
-    let window = video_subsystem.window("CHIP-8 Emulator", width * scale, height * scale)
-        .position_centered()
-        .build()
-        .unwrap();
-    let canvas = window.into_canvas().build().unwrap();
-    let event_pump = sdl_context.event_pump().unwrap();
-    (event_pump, canvas)
-}

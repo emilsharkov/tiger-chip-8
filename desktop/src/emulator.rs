@@ -1,4 +1,5 @@
 use sdl2::keyboard::Keycode;
+use tiger_chip8_core::apu::Apu;
 use tiger_chip8_core::bus::Bus;
 use tiger_chip8_core::emulator::Emulator;
 use tiger_chip8_core::cpu::Cpu;
@@ -8,6 +9,7 @@ use tiger_chip8_core::keypad::Keypad;
 use tiger_chip8_core::timers::Timers;
 use tiger_chip8_core::architecture::display::Display;
 use crate::display::DesktopDisplay;
+use crate::apu::DesktopApu;
 
 pub struct DesktopEmulator {
     cpu: Cpu,
@@ -16,9 +18,10 @@ pub struct DesktopEmulator {
     keypad: Keypad,
     timers: Timers,
     display: DesktopDisplay,
+    apu: DesktopApu,
 }
 
-impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
+impl Emulator<DesktopDisplay, DesktopApu, Keycode> for DesktopEmulator {
     fn new(
         cpu: Cpu,
         ram: Ram,
@@ -26,8 +29,9 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
         keypad: Keypad,
         timers: Timers,
         display: DesktopDisplay,
+        apu: DesktopApu,
     ) -> Self {
-        Self { cpu, ram, vram, keypad, timers, display }
+        Self { cpu, ram, vram, keypad, timers, display, apu }
     }
 
     fn emulate_instruction(&mut self) {
@@ -45,12 +49,20 @@ impl Emulator<DesktopDisplay, Keycode> for DesktopEmulator {
     }
 
     fn tick_timers(&mut self) {
-        // TODO: add sound
         self.timers.tick();
+        if self.timers.sound_timer > 0 {
+            self.apu.play();
+        } else {
+            self.apu.stop();
+        }
     }
 
     fn load_rom(&mut self, rom_bytes: Vec<u8>) {
         self.ram.load_rom(rom_bytes);
+    }
+
+    fn load_font_set(&mut self) {
+        self.ram.load_font_set();
     }
     
     fn to_keycode(&mut self, control: Keycode) -> Option<u8> {

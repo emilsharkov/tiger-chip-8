@@ -10,7 +10,7 @@ pub struct Args {
     #[arg(value_name = "ROM_FILE", value_parser = validate_rom_file_parser)]
     pub rom_file: PathBuf,
     
-    #[arg(short, long, default_value = "1", value_parser = validate_scale_parser)]
+    #[arg(short, long, default_value = "15", value_parser = validate_scale_parser)]
     pub scale: u8,
     
     #[arg(short, long, default_value = "10", value_parser = validate_ticks_per_frame_parser)]
@@ -33,8 +33,8 @@ fn validate_rom_file_parser(s: &str) -> Result<PathBuf, String> {
 
 fn validate_scale_parser(s: &str) -> Result<u8, String> {
     let scale = s.parse::<u8>().map_err(|e| format!("Invalid scale format: {}", e))?;
-    if !(scale >= 1 && scale <= 10) {
-        return Err("Scale must be between 1 and 10".to_string());
+    if !(scale >= 1 && scale <= 20) {
+        return Err("Scale must be between 1 and 20".to_string());
     }
     Ok(scale)
 }
