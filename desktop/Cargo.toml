@@ -1,9 +1,9 @@
 [package]
 name = "tiger-chip8-desktop"
 version = "0.1.0"
-edition = "2021"
-authors = ["Your Name <your.email@example.com>"]
-license = "MIT OR Apache-2.0"
+edition = "2025"
+authors = ["Emil Sharkov <emosharkov@gmail.com>"]
+license = "MIT"
 description = "Desktop frontend for CHIP-8 emulator using SDL2"
 
 [[bin]]
