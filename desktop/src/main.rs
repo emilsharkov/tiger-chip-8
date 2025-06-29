@@ -3,13 +3,13 @@ mod args;
 mod display;
 mod emulator;
 mod gui;
+mod rom;
 
 use crate::{apu::DesktopApu, args::Args, gui::init_gui};
 use clap::Parser;
 use display::DesktopDisplay;
 use emulator::DesktopEmulator;
 use sdl2::event::Event;
-use std::{fs::File, io::Read, path::PathBuf};
 use tiger_chip_8_core::{
     apu::Apu,
     cpu::Cpu,
@@ -31,7 +31,7 @@ fn main() {
         std::process::exit(1);
     });
 
-    let rom_bytes = get_rom_bytes(rom_file);
+    let rom_bytes = rom::get_rom_bytes(rom_file);
     let (mut event_pump, canvas, audio_device) =
         init_gui(DISPLAY_WIDTH as u32, DISPLAY_HEIGHT as u32, scale.into());
 
@@ -76,11 +76,4 @@ fn main() {
         emulator.tick_timers();
         emulator.draw_screen(DISPLAY_WIDTH, scale);
     }
-}
-
-fn get_rom_bytes(rom_file: PathBuf) -> Vec<u8> {
-    let mut file = File::open(rom_file).unwrap();
-    let mut buffer = Vec::new();
-    file.read_to_end(&mut buffer).unwrap();
-    buffer
 }

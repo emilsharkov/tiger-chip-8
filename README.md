@@ -29,6 +29,11 @@ brew install sdl2
 export LIBRARY_PATH="$LIBRARY_PATH:$(brew --prefix)/lib"
 ```
 
+### Ubuntu
+```
+sudo apt install libsdl2-dev libsdl2-2.0-0 -y
+```
+
 ## Running the Emulator
 
 ### Without Compiling an Executable
