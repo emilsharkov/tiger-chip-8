@@ -4,7 +4,6 @@ const scale = 12;
 
 interface UseChip8Props {
   romBytes: Uint8Array | null;
-  isPlaying: boolean;
   speed: number[];
 }
 

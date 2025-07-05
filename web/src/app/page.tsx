@@ -1,21 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { useChip8 } from '@/hooks/useChip8';
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { Upload, Play, Pause, RotateCcw } from "lucide-react"
-import Image from "next/image"
 import { Rom, ROMS } from '@/lib/roms';
+import { Pause, Play, RotateCcw } from "lucide-react";
+import Image from "next/image";
+import { useState } from 'react';
 
 export default function Home() {
-  const [isPlaying, setIsPlaying] = useState(true)
   const [speed, setSpeed] = useState([12])
   const [romBytes, setRomBytes] = useState<Uint8Array | null>(null);
   const [showTiger, setShowTiger] = useState(true);
-  const { reset } = useChip8({ romBytes, isPlaying, speed });
+  const { reset } = useChip8({ romBytes, speed });
 
   const selectRom = async (value: string) => {
     setShowTiger(false);
