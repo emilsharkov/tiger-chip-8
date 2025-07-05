@@ -12,7 +12,7 @@ interface UseChip8Return {
 }
 
 const useChip8 = (props: UseChip8Props): UseChip8Return => {
-  const { romBytes, isPlaying, speed } = props;
+  const { romBytes, speed } = props;
   const [reset, setReset] = useState(false);
 
   useEffect(() => {

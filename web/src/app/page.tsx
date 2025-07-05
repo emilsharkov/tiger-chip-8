@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useState } from 'react';
 
 export default function Home() {
+  const [isPlaying, setIsPlaying] = useState(true)
   const [speed, setSpeed] = useState([12])
   const [romBytes, setRomBytes] = useState<Uint8Array | null>(null);
   const [showTiger, setShowTiger] = useState(true);
