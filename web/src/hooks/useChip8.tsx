@@ -1,36 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const useChip8 = (romBytes: Uint8Array | null) => {
+const scale = 12;
+
+interface UseChip8Props {
+  romBytes: Uint8Array | null;
+  isPlaying: boolean;
+  speed: number[];
+}
+
+interface UseChip8Return {
+  reset: () => void;
+}
+
+const useChip8 = (props: UseChip8Props): UseChip8Return => {
+  const { romBytes, isPlaying, speed } = props;
+  const [reset, setReset] = useState(false);
+
   useEffect(() => {
-    if (!romBytes) return;
+    if (!romBytes || speed.length === 0) return;
 
     let animationFrameId: number;
 
     (async () => {
-      const { get_audio, get_canvas_context, get_height, get_width, WasmEmulator } = await import("../../public/wasm/tiger_chip_8_wasm");
+      const { 
+        get_audio, 
+        get_canvas_context, 
+        get_height, 
+        get_width, 
+        WasmEmulator 
+      } = await import("../../public/wasm/tiger_chip_8_wasm");
 
       const width = get_width();
       const height = get_height();
-      const scale = 10;
-      const opPerFrame = 10;
-
       const ctx = get_canvas_context(width, height, scale);
       const audio = get_audio();
+      const opPerFrame = speed[0];
 
       const emulator = new WasmEmulator(ctx, audio);
       emulator.load_font_set();
       emulator.load_rom(romBytes);
 
       const keydownHandler = (event: KeyboardEvent) => {
-        const keycode = emulator?.to_keycode(event.key);
+        const keycode = emulator.to_keycode(event.key);
         if (keycode !== undefined) {
-          emulator?.handle_key_press(keycode, true);
+          emulator.handle_key_press(keycode, true);
         }
       };
       const keyupHandler = (event: KeyboardEvent) => {
-        const keycode = emulator?.to_keycode(event.key);
+        const keycode = emulator.to_keycode(event.key);
         if (keycode !== undefined) {
-          emulator?.handle_key_press(keycode, false);
+          emulator.handle_key_press(keycode, false);
         }
       };
 
@@ -46,6 +65,10 @@ const useChip8 = (romBytes: Uint8Array | null) => {
         animationFrameId = requestAnimationFrame(renderFrame);
       };
 
+      if (reset) {
+        setReset(false);
+      }
+
       renderFrame();
 
       return () => {
@@ -54,7 +77,9 @@ const useChip8 = (romBytes: Uint8Array | null) => {
         cancelAnimationFrame(animationFrameId);
       };
     })();
-  }, [romBytes]);
+  }, [romBytes, speed, reset]);
+
+  return { reset: () => setReset(true) };
 };
 
 export { useChip8 };

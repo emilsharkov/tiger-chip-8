@@ -16,7 +16,7 @@ impl Display<CanvasRenderingContext2d> for WasmDisplay {
         self.canvas.set_fill_style_str("white");
         self.canvas.clear_rect(0.0, 0.0, canvas_width, canvas_height);
 
-        self.canvas.set_fill_style_str("black");
+        self.canvas.set_fill_style_str("#ea580c");
 
         for (i, pixel) in pixels.iter().enumerate() {
             if *pixel {
