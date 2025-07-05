@@ -19,6 +19,12 @@ Options:
 ```
 
 ## Prerequisites
+
+### Web
+cargo install wasm-pack
+wasm-pack build --target web
+
+### Desktop
 You need to have SDL2 installed on your machine.
 
 Instruction can be found in the [sdl2 github readme](https://github.com/Rust-SDL2/rust-sdl2).
