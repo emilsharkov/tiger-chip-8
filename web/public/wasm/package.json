@@ -1,0 +1,22 @@
+{
+  "name": "tiger-chip-8-wasm",
+  "type": "module",
+  "collaborators": [
+    "Emil Sharkov <emosharkov@gmail.com>"
+  ],
+  "description": "WASM Bindings for CHIP-8 emulator",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "tiger_chip_8_wasm_bg.wasm",
+    "tiger_chip_8_wasm.js",
+    "tiger_chip_8_wasm_bg.js",
+    "tiger_chip_8_wasm.d.ts"
+  ],
+  "main": "tiger_chip_8_wasm.js",
+  "types": "tiger_chip_8_wasm.d.ts",
+  "sideEffects": [
+    "./tiger_chip_8_wasm.js",
+    "./snippets/*"
+  ]
+}
