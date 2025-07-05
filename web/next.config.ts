@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  webpack(config) {
+    config.experiments = {
+      syncWebAssembly: true,
+      asyncWebAssembly: true,
+      layers: true, // 👈 Add this line
+    };
+
+    return config;
+  },
 };
 
 export default nextConfig;

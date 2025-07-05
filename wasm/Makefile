@@ -1,6 +1,6 @@
 all:
-	wasm-pack build --target bundler --out-dir ../web/src/wasm
+	wasm-pack build --target bundler --out-dir ../web/public/wasm
 
 clean:
-	rm -rf ../web/src/wasm
+	rm -rf ../web/public/wasm
 

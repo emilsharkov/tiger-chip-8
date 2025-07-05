@@ -1,57 +1,61 @@
-import { get_audio, get_canvas_context, get_height, get_width, WasmEmulator } from "@/wasm/tiger_chip_8_wasm";
 import { useEffect } from "react";
 
 const useChip8 = (romBytes: Uint8Array | null) => {
-    useEffect(() => {
-        if (!romBytes) return;
+  useEffect(() => {
+    if (!romBytes) return;
 
-        let emulator: WasmEmulator;
-        let animationFrameId: number;
-        const keydownHandler = (event: KeyboardEvent) => {
-            const keycode = emulator?.to_keycode(event.key);
-            if (keycode !== undefined) {
-                emulator?.handle_key_press(keycode, true);
-            }
-        };
-        const keyupHandler = (event: KeyboardEvent) => {
-            const keycode = emulator?.to_keycode(event.key);
-            if (keycode !== undefined) {
-                emulator?.handle_key_press(keycode, false);
-            }
-        };
+    let animationFrameId: number;
 
-        const width = get_width();
-        const height = get_height();
-        const scale = 10;
-        const opPerFrame = 10;
+    (async () => {
+      // 🧠 Dynamic import loads WASM only in the browser
+      const { get_audio, get_canvas_context, get_height, get_width, WasmEmulator } = await import("../../public/wasm/tiger_chip_8_wasm");
 
-        const ctx = get_canvas_context(width, height, scale);
-        const audio = get_audio();
+      const width = get_width();
+      const height = get_height();
+      const scale = 10;
+      const opPerFrame = 10;
 
-        emulator = new WasmEmulator(ctx, audio);
-        emulator.load_font_set();
-        emulator.load_rom(romBytes);
+      const ctx = get_canvas_context(width, height, scale);
+      const audio = get_audio();
 
-        document.addEventListener('keydown', keydownHandler);
-        document.addEventListener('keyup', keyupHandler);
+      const emulator = new WasmEmulator(ctx, audio);
+      emulator.load_font_set();
+      emulator.load_rom(romBytes);
 
-        const renderFrame = () => {
-            for (let i = 0; i < opPerFrame; i++) {
-                emulator.emulate_instruction();
-            }
-            emulator.tick_timers();
-            emulator.draw_screen(width, scale);
-            animationFrameId = requestAnimationFrame(renderFrame);
-        };
+      const keydownHandler = (event: KeyboardEvent) => {
+        const keycode = emulator?.to_keycode(event.key);
+        if (keycode !== undefined) {
+          emulator?.handle_key_press(keycode, true);
+        }
+      };
+      const keyupHandler = (event: KeyboardEvent) => {
+        const keycode = emulator?.to_keycode(event.key);
+        if (keycode !== undefined) {
+          emulator?.handle_key_press(keycode, false);
+        }
+      };
 
-        renderFrame();
+      document.addEventListener("keydown", keydownHandler);
+      document.addEventListener("keyup", keyupHandler);
 
-        return () => {
-            document.removeEventListener('keydown', keydownHandler);
-            document.removeEventListener('keyup', keyupHandler);
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, [romBytes]);
-}
+      const renderFrame = () => {
+        for (let i = 0; i < opPerFrame; i++) {
+          emulator.emulate_instruction();
+        }
+        emulator.tick_timers();
+        emulator.draw_screen(width, scale);
+        animationFrameId = requestAnimationFrame(renderFrame);
+      };
+
+      renderFrame();
+
+      return () => {
+        document.removeEventListener("keydown", keydownHandler);
+        document.removeEventListener("keyup", keyupHandler);
+        cancelAnimationFrame(animationFrameId);
+      };
+    })();
+  }, [romBytes]);
+};
 
 export { useChip8 };
