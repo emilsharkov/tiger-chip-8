@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     config.experiments = {
       syncWebAssembly: true,
       asyncWebAssembly: true,
-      layers: true, // 👈 Add this line
+      layers: true,
     };
 
     return config;

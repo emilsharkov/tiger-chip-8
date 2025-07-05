@@ -7,7 +7,6 @@ const useChip8 = (romBytes: Uint8Array | null) => {
     let animationFrameId: number;
 
     (async () => {
-      // 🧠 Dynamic import loads WASM only in the browser
       const { get_audio, get_canvas_context, get_height, get_width, WasmEmulator } = await import("../../public/wasm/tiger_chip_8_wasm");
 
       const width = get_width();
