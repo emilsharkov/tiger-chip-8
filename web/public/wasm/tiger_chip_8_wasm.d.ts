@@ -14,4 +14,7 @@ export class WasmEmulator {
   to_keycode(control: string): number | undefined;
   handle_key_press(key: number, pressed: boolean): void;
   draw_screen(width: number, scale: number): void;
+  reset(): void;
+  resume(): void;
+  pause(): void;
 }

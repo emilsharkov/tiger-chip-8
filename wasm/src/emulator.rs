@@ -20,6 +20,7 @@ pub struct WasmEmulator {
     timers: Timers,
     display: WasmDisplay,
     apu: WasmApu,
+    paused: bool,
 }
 
 // This is the trait impl (not exported to JS)
@@ -41,6 +42,7 @@ impl Emulator<WasmDisplay, WasmApu, String> for WasmEmulator {
             timers,
             display,
             apu,
+            paused: false,
         }
     }
 
@@ -132,16 +134,23 @@ impl WasmEmulator {
             timers,
             display,
             apu,
+            paused: false,
         }
     }
 
     #[wasm_bindgen]
     pub fn emulate_instruction(&mut self) {
+        if self.paused {
+            return;
+        }
         Emulator::emulate_instruction(self);
     }
 
     #[wasm_bindgen]
     pub fn tick_timers(&mut self) {
+        if self.paused {
+            return;
+        }
         Emulator::tick_timers(self);
     }
 
@@ -168,5 +177,25 @@ impl WasmEmulator {
     #[wasm_bindgen]
     pub fn draw_screen(&mut self, width: usize, scale: u8) {
         Emulator::draw_screen(self, width, scale);
+    }
+
+    #[wasm_bindgen]
+    pub fn reset(&mut self) {
+        self.cpu = Cpu::new();
+        self.ram = Ram::new();
+        self.vram = Vram::new();
+        self.keypad = Keypad::new();
+        self.timers = Timers::new();
+        self.display.clear();
+    }
+
+    #[wasm_bindgen]
+    pub fn resume(&mut self) {
+        self.paused = false;
+    }
+
+    #[wasm_bindgen]
+    pub fn pause(&mut self) {
+        self.paused = true;
     }
 }

@@ -198,6 +198,12 @@ export function get_audio() {
     return ret;
 }
 
+function passArray8ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 1, 1) >>> 0;
+    getUint8ArrayMemory0().set(arg, ptr / 1);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
+}
 /**
  * @returns {number}
  */
@@ -212,13 +218,6 @@ export function get_width() {
 export function get_height() {
     const ret = wasm.get_height();
     return ret >>> 0;
-}
-
-function passArray8ToWasm0(arg, malloc) {
-    const ptr = malloc(arg.length * 1, 1) >>> 0;
-    getUint8ArrayMemory0().set(arg, ptr / 1);
-    WASM_VECTOR_LEN = arg.length;
-    return ptr;
 }
 
 const WasmEmulatorFinalization = (typeof FinalizationRegistry === 'undefined')
@@ -288,6 +287,15 @@ export class WasmEmulator {
      */
     draw_screen(width, scale) {
         wasm.wasmemulator_draw_screen(this.__wbg_ptr, width, scale);
+    }
+    reset() {
+        wasm.wasmemulator_reset(this.__wbg_ptr);
+    }
+    resume() {
+        wasm.wasmemulator_resume(this.__wbg_ptr);
+    }
+    pause() {
+        wasm.wasmemulator_pause(this.__wbg_ptr);
     }
 }
 
