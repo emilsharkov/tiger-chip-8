@@ -1,7 +1,7 @@
 # tiger-chip-8
 A Chip-8 emulator written in Rust for playing retro games like PONG through your cli or browser
 
-![PONG](chip-8.png)
+![PONG](chip-8.webp)
 
 ## Web
 https://tiger-chip-8.vercel.app/
