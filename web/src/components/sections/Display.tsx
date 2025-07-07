@@ -12,13 +12,19 @@ const Display = (props: DisplayProps) => {
             <div className="aspect-video bg-gradient-to-br from-orange-100 to-amber-100 border-2 border-orange-300 rounded-lg flex items-center justify-center relative">
               {showTiger && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-                  <Image
-                    src="/images/tiger.png"
-                    alt="Tiger Display Ready"
-                    width={200}
-                    height={200}
-                    className="mx-auto rounded-full shadow-xl"
-                  />
+                  <a
+                    href="https://www.auspiciousbeginning.com/page7?product_id=124"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="/images/tiger.png"
+                      alt="Tiger Display Ready"
+                      width={200}
+                      height={200}
+                      className="mx-auto rounded-full shadow-xl"
+                    />
+                  </a>
                   <p className="text-orange-600 font-medium">Tiger Display Ready</p>
                   <p className="text-orange-500 text-sm">Select a game to start playing!</p>
                 </div>
