@@ -27,7 +27,6 @@ Options:
 ### Web
 ```
 cargo install wasm-pack
-wasm-pack build --target web
 ```
 
 ### Desktop
@@ -50,6 +49,9 @@ sudo apt install libsdl2-dev libsdl2-2.0-0 -y
 
 ### Web
 ```
+cd wasm
+make
+cd ../web
 npm run dev
 ```
 
