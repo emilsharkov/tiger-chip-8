@@ -26,7 +26,7 @@ const Header = () => {
                   rel="noopener noreferrer"
                   className="text-orange-700 hover:text-orange-900 font-medium"
               >
-                  Where to buy tiger?
+                  Where to Buy Tiger?
               </a>
               </div>
           </div>
