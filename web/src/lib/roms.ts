@@ -19,7 +19,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Use the paddle to bounce the ball off the top of the screen', 'Break all the bricks to win'],
         objective: 'Break all the bricks to win',
-        speed: 5
+        speed: 10
     },
     {
         filename: 'connect4',   
@@ -32,7 +32,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Connect four discs in a row, column, or diagonal to win', 'Block your opponent from winning'],
         objective: 'Connect four discs in a row, column, or diagonal to win',
-        speed: 1,
+        speed: 2,
     },
     {
         filename: 'invaders',
@@ -45,7 +45,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Shoot all the aliens before they land'],
         objective: 'Destroy all the aliens to save the planet',
-        speed: 6,
+        speed: 12,
     },
     {
         filename: 'missile',
@@ -56,7 +56,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Aim carefully to intercept incoming missiles', 'Protect your cities at all costs'],
         objective: 'Defend your cities from destruction',
-        speed: 6,
+        speed: 12,
     },
     {
         filename: 'pong',
@@ -70,7 +70,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Anticipate the ball\'s trajectory', 'Keep the ball in play to score points'],
         objective: 'Score more points than your opponent',
-        speed: 6,
+        speed: 12,
     },
     {
         filename: 'pong2',
@@ -84,7 +84,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Anticipate the ball\'s trajectory', 'Keep the ball in play to score points'],
         objective: 'Win by scoring the most points',
-        speed: 6,
+        speed: 12,
     },
     {
         filename: 'snake',
@@ -98,7 +98,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Plan your moves ahead', 'Avoid crashing into the snake\'s body'],
         objective: 'Grow the longest snake possible',
-        speed: 4,
+        speed: 8,
     },
     {
         filename: 'tetris',
@@ -112,7 +112,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Clear lines to score points', 'Plan for upcoming blocks'],
         objective: 'Clear as many lines as possible',
-        speed: 5,
+        speed: 10,
     },
     {
         filename: 'wall',
@@ -124,7 +124,7 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Anticipate the ball\'s trajectory', 'Keep the ball in play to score points'],
         objective: 'Outmaneuver your opponent by building walls',
-        speed: 5,
+        speed: 10,
     },
     {
         filename: 'wipeoff',
@@ -136,6 +136,6 @@ export const ROMS: Rom[] = [
         ],
         tips: ['Use the paddle to bounce the ball off the top of the screen', 'Break all the bricks to win'],
         objective: 'Clear all obstacles from the screen',
-        speed: 5,
+        speed: 10,
     }
 ]

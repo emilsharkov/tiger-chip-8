@@ -15,8 +15,8 @@ interface SettingsProps {
 
 const Settings = (props: SettingsProps) => {
     const { setShowTiger, setSelectedRom } = props;
-    const [isPlaying, setIsPlaying] = useState(true)
-    const [speed, setSpeed] = useState([6])
+    const [isPlaying, setIsPlaying] = useState<boolean>(true)
+    const [speed, setSpeed] = useState<number[]>([6])
     const [romBytes, setRomBytes] = useState<Uint8Array | null>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const { reset } = useChip8({ romBytes, speed, isPlaying });

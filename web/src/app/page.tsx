@@ -9,7 +9,7 @@ import { Rom } from '@/lib/roms';
 import { useState } from 'react';
 
 export default function Home() {
-  const [showTiger, setShowTiger] = useState(true);
+  const [showTiger, setShowTiger] = useState<boolean>(true);
   const [selectedRom, setSelectedRom] = useState<Rom | null>(null);
 
   return (

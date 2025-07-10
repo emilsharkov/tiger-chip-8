@@ -15,7 +15,7 @@ interface UseChip8Return {
 
 const useChip8 = (props: UseChip8Props): UseChip8Return => {
   const { romBytes, speed, isPlaying } = props;
-  const [reset, setReset] = useState(false);
+  const [reset, setReset] = useState<boolean>(false);
   const emulatorRef = useRef<WasmEmulator | null>(null);
   const widthRef = useRef<number | null>(null);
 
