@@ -29,3 +29,11 @@ impl Display<CanvasRenderingContext2d> for WasmDisplay {
         }
     }
 }
+
+impl WasmDisplay {
+    pub fn clear(&mut self) {
+        let canvas_width = self.canvas.canvas().unwrap().width() as f64;
+        let canvas_height = self.canvas.canvas().unwrap().height() as f64;
+        self.canvas.clear_rect(0.0, 0.0, canvas_width, canvas_height);
+    }
+}
